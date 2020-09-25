@@ -26,7 +26,7 @@ function Index () {
     return (
         <View className="index">
             {posts.map((post, index) => {
-                return <PostCard key={index} title={post.title} content={post.content}/>
+                return <PostCard key={index} title={post.title} content={post.content} isList/>
             })}
             <PostForm
                 formTitle={formTitle}
