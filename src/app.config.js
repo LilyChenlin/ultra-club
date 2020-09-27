@@ -16,7 +16,7 @@ export default {
         pagePath: 'pages/index/index',
         text: '首页',
         iconPath: './images/homeSelected.png',
-        selectedIconPath: './images/homeSelected.png',
+        selectedIconPath: './images/homeSelected.png'
       },
       {
         pagePath: 'pages/mine/mine',

@@ -1,7 +1,7 @@
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import React, { useState } from 'react'
 import {PostCard, PostForm} from '../components/index'
-
+import {AtFab, AtFloatLayout, AtMessage} from 'taro-ui'
 import './index.scss'
 
 function Index () {
@@ -12,7 +12,7 @@ function Index () {
     }])
     const [formTitle, setFormTitle] = useState('')
     const [formContent, setFormContent] = useState('')
-
+    const [isOpened, setIsOpened] = useState(false)
     let handleSubmit = (e) => {
         e.preventDefault()
         const newPosts = posts.concat({
@@ -22,19 +22,36 @@ function Index () {
         setPosts(newPosts)
         setFormTitle("")
         setFormContent("")
+        setIsOpened(false)
+        Taro.atMessage({
+            message: '发表文章成功',
+            type: 'success'
+        })
     }
     return (
         <View className="index">
+            <AtMessage/>
             {posts.map((post, index) => {
                 return <PostCard key={index} title={post.title} content={post.content} isList/>
             })}
-            <PostForm
-                formTitle={formTitle}
-                formContent={formContent}
-                handleSubmit={e => handleSubmit(e)}
-                handleTitleInput={e => setFormTitle(e.target.value)}
-                handleContentInput={e => setFormContent(e.target.value)}
-            />
+            <AtFloatLayout
+                isOpened={isOpened}
+                title='发表新文章'
+                onClose={() => setIsOpened(false)}
+            >
+                <PostForm
+                    formTitle={formTitle}
+                    formContent={formContent}
+                    handleSubmit={e => handleSubmit(e)}
+                    handleTitleInput={e => setFormTitle(e.target.value)}
+                    handleContentInput={e => setFormContent(e.target.value)}
+                />
+            </AtFloatLayout>
+            <View className="post-button">
+                <AtFab onClick={() => setIsOpened(true)}>
+                    <Text className="at-fab__icon at-icon at-icon-edit"></Text>
+                </AtFab>
+            </View>
         </View>
     )
 }
